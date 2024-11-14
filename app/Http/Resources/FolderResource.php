@@ -18,6 +18,7 @@ class FolderResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'sub_folders' => $this->when(!$this->sub->isEmpty(), FolderCollection::make($this->sub)),
+            'files' => $this->when(!$this->files->isEmpty(), FileCollection::make($this->files)),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
         ];

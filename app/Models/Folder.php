@@ -19,4 +19,9 @@ class Folder extends Model
     {
         return $this->hasMany(Folder::class, 'parent_id');
     }
+
+    public function files()
+    {
+        return $this->hasMany(File::class, 'folder_id');
+    }
 }

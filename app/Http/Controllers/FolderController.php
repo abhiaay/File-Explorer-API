@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreFolderRequest;
 use App\Http\Requests\UpdateFolderRequest;
+use App\Http\Resources\FileCollection;
 use App\Http\Resources\FolderCollection;
 use App\Http\Resources\FolderResource;
+use App\Models\File;
 use App\Models\Folder;
 use App\Repositories\FolderRepository;
 use App\Traits\Http\ResponseTrait;
@@ -27,7 +29,11 @@ class FolderController extends Controller
     public function index()
     {
         $rootFolders = Folder::whereNull('parent_id')->get();
-        return $this->successResponse(FolderCollection::make($rootFolders));
+        $rootFiles = File::whereNull('folder_id')->get();
+        return $this->successResponse([
+            'folders' => FolderCollection::make($rootFolders),
+            'files' => FileCollection::make($rootFiles)
+        ]);
     }
 
     /**
